@@ -12,7 +12,7 @@ This repo is now configured so Wrangler uploads the **real Next.js output**:
 
 - `npm run cf:build` builds Next.js for Cloudflare (`@cloudflare/next-on-pages`) and writes `.vercel/output/static/.assetsignore` with `_worker.js`
 - `wrangler.jsonc` points to the generated worker and assets:
-  - `main: .vercel/output/static/_worker.js`
+  - `main: .vercel/output/static/_worker.js/index.js`
   - `assets.directory: .vercel/output/static`
 - `wrangler.jsonc` now also has `build.command = "npm run cf:build"`, so `npx wrangler versions upload` first creates `.vercel/output` automatically.
 
