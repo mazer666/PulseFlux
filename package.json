@@ -8,9 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "test": "python3 tests/run_tests.py",
-    "cf:build": "env -u HTTP_PROXY -u HTTPS_PROXY -u http_proxy -u https_proxy npx @cloudflare/next-on-pages",
-    "cf:deploy:dry": "npm run cf:build && npx wrangler versions upload --dry-run",
-    "cf:deploy": "npm run cf:build && npx wrangler versions upload"
+    "cf:build": "env -u HTTP_PROXY -u HTTPS_PROXY -u http_proxy -u https_proxy npx @cloudflare/next-on-pages && printf '_worker.js\n' > .vercel/output/static/.assetsignore",
+    "cf:deploy:dry": "npx wrangler versions upload --dry-run",
+    "cf:deploy": "npx wrangler versions upload"
   },
   "dependencies": {
     "next": "14.2.5",

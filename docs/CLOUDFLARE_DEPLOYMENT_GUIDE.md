@@ -10,7 +10,7 @@ then Cloudflare deployed a placeholder Worker, not your built Next.js app.
 
 This repo is now configured so Wrangler uploads the **real Next.js output**:
 
-- `npm run cf:build` builds Next.js for Cloudflare (`@cloudflare/next-on-pages`)
+- `npm run cf:build` builds Next.js for Cloudflare (`@cloudflare/next-on-pages`) and writes `.vercel/output/static/.assetsignore` with `_worker.js`
 - `wrangler.jsonc` points to the generated worker and assets:
   - `main: .vercel/output/static/_worker.js`
   - `assets.directory: .vercel/output/static`
@@ -42,7 +42,7 @@ npm run cf:build
 npx wrangler versions upload --dry-run
 ```
 
-Expected result: no "Missing entry-point" / "entry-point file ... was not found" error, and Wrangler reports upload size.
+Expected result: no "Missing entry-point" / "entry-point file ... was not found" error and no `_worker.js directory as an asset` error; Wrangler reports upload size.
 
 ## 4) If deployment still serves old placeholder text
 
@@ -56,4 +56,5 @@ Expected result: no "Missing entry-point" / "entry-point file ... was not found"
 - Build fails: verify Node version and build command.
 - API fails: verify binding names exactly match code usage.
 - DB errors: check migrations ran and schema exists.
-- `wrangler versions upload` fails with "Missing entry-point": ensure `npm run cf:build` ran before upload.
+- `wrangler versions upload` fails with "Missing entry-point": ensure `build.command` exists in `wrangler.jsonc` and `npm run cf:build` works locally.
+- `Uploading a Pages _worker.js directory as an asset`: ensure `.vercel/output/static/.assetsignore` contains `_worker.js` (this repo now writes that automatically in `cf:build`).
