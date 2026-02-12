@@ -154,7 +154,15 @@ export function buildPuzzle(language: Language, size: 5 | 7 | 9): GamePuzzle {
   const seed = seedData[language][size];
   const flat = seed.across.join('').split('');
   const solutionTiles = flat.map((value, idx) => ({ id: `tile-${idx}`, value }));
-  const shuffledTiles = shuffleTiles(solutionTiles);
+
+  // We reshuffle a few times if needed so a fresh puzzle does not accidentally start already solved.
+  // This removes random/flaky behavior in both gameplay and automated tests.
+  let shuffledTiles = shuffleTiles(solutionTiles);
+  let attempts = 0;
+  while (isSolved(shuffledTiles, solutionTiles) && attempts < 5) {
+    shuffledTiles = shuffleTiles(solutionTiles);
+    attempts += 1;
+  }
 
   return {
     language,

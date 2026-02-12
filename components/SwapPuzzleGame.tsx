@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
 import {
   buildPuzzle,
@@ -239,7 +240,17 @@ export function SwapPuzzleGame() {
               key={`${tile.id}-${index}`}
               aria-label={`Tile ${index + 1}`}
             >
-              {tileMode === 'letters' ? tile.value : <img src={createImageToken(tile.value)} alt={`Token ${tile.value}`} />}
+              {tileMode === 'letters' ? (
+                tile.value
+              ) : (
+                <Image
+                  src={createImageToken(tile.value)}
+                  alt={`Token ${tile.value}`}
+                  width={48}
+                  height={48}
+                  unoptimized
+                />
+              )}
             </button>
           ))}
         </div>

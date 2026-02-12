@@ -23,3 +23,4 @@ The format is based on Keep a Changelog, and this project follows semantic-style
 - Initial automated tests for core game logic.
 - GitHub Actions CI workflow for lint/test/build.
 - Root README with setup and quality-check instructions.
+- Dependency-light repository test runner (`tests/run_tests.py`) to allow local test execution even when npm registry install is blocked.

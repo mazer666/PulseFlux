@@ -18,7 +18,9 @@ describe('game logic', () => {
 
   it('detects solved puzzle', () => {
     const puzzle = buildPuzzle('en', 5);
+    const unsolved = swapTiles(puzzle.solutionTiles, 0, 1);
+
     expect(isSolved(puzzle.solutionTiles, puzzle.solutionTiles)).toBe(true);
-    expect(isSolved(puzzle.shuffledTiles, puzzle.solutionTiles)).toBe(false);
+    expect(isSolved(unsolved, puzzle.solutionTiles)).toBe(false);
   });
 });
