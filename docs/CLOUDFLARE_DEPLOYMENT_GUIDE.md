@@ -14,14 +14,17 @@ This repo is now configured so Wrangler uploads the **real Next.js output**:
 - `wrangler.jsonc` points to the generated worker and assets:
   - `main: .vercel/output/static/_worker.js`
   - `assets.directory: .vercel/output/static`
+- `wrangler.jsonc` now also has `build.command = "npm run cf:build"`, so `npx wrangler versions upload` first creates `.vercel/output` automatically.
 
 ## 2) Cloudflare settings you should use
 
-In Cloudflare (Workers build/deploy command), set deploy command to:
+In Cloudflare (Workers build/deploy command), simplest setting is:
 
 ```bash
-npm run cf:deploy
+npx wrangler versions upload
 ```
+
+Why this works now: Wrangler runs `build.command` from `wrangler.jsonc` first, so the entry file exists before upload.
 
 If you only want to test build+upload locally without publishing, use:
 
@@ -39,7 +42,7 @@ npm run cf:build
 npx wrangler versions upload --dry-run
 ```
 
-Expected result: no "Missing entry-point" error, and Wrangler reports upload size.
+Expected result: no "Missing entry-point" / "entry-point file ... was not found" error, and Wrangler reports upload size.
 
 ## 4) If deployment still serves old placeholder text
 

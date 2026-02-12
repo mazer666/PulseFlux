@@ -2,6 +2,9 @@
   "name": "swappuzzle",
   "compatibility_date": "2026-02-12",
   "compatibility_flags": ["nodejs_compat"],
+  "build": {
+    "command": "npm run cf:build"
+  },
   "main": ".vercel/output/static/_worker.js",
   "assets": {
     "directory": ".vercel/output/static"
