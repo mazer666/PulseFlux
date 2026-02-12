@@ -1,48 +1,60 @@
-# Cloudflare Deployment Guide (Beginner Friendly)
+# Cloudflare Deployment Guide (Noob-Friendly)
 
-This guide explains how to deploy SwapPuzzle with Cloudflare Pages + Functions + D1.
+If your site shows:
 
-## 1. What You Need
+> "SwapPuzzle deployment is online. Configure a Next.js-compatible Cloudflare build step to serve the full app."
 
-1. A GitHub account.
-2. A Cloudflare account.
-3. Node.js LTS installed locally.
-4. `npm` available in terminal.
+then Cloudflare deployed a placeholder Worker, not your built Next.js app.
 
-## 2. Connect Repository to Cloudflare Pages
+## 1) What changed in this repo
 
-1. Push your code to GitHub.
-2. In Cloudflare dashboard, open **Workers & Pages**.
-3. Click **Create application** → **Pages** → **Connect to Git**.
-4. Select your `SwapPuzzle` repository.
-5. Set build command and output directory according to the final frontend setup.
+This repo is now configured so Wrangler uploads the **real Next.js output**:
 
-## 3. Create D1 Database
+- `npm run cf:build` builds Next.js for Cloudflare (`@cloudflare/next-on-pages`) and writes `.vercel/output/static/.assetsignore` with `_worker.js`
+- `wrangler.jsonc` points to the generated worker and assets:
+  - `main: .vercel/output/static/_worker.js`
+  - `assets.directory: .vercel/output/static`
+- `wrangler.jsonc` now also has `build.command = "npm run cf:build"`, so `npx wrangler versions upload` first creates `.vercel/output` automatically.
 
-1. In Cloudflare dashboard, go to **D1**.
-2. Click **Create Database**.
-3. Name it, e.g., `swappuzzle-db`.
-4. Save the Database ID for bindings.
+## 2) Cloudflare settings you should use
 
-## 4. Configure Bindings
+In Cloudflare (Workers build/deploy command), simplest setting is:
 
-1. In your Pages project settings, open **Functions** / **Bindings**.
-2. Add D1 binding, e.g., variable `DB` linked to `swappuzzle-db`.
-3. Add any environment variables required by the app.
+```bash
+npx wrangler versions upload
+```
 
-## 5. Deploy and Verify
+Why this works now: Wrangler runs `build.command` from `wrangler.jsonc` first, so the entry file exists before upload.
 
-1. Commit and push to `main`.
-2. Cloudflare Pages builds automatically.
-3. Open the deployment URL.
-4. Verify core pages load and puzzle API endpoints respond.
+If you only want to test build+upload locally without publishing, use:
 
-## 6. Typical Troubleshooting
+```bash
+npm run cf:deploy:dry
+```
+
+## 3) Local test (copy/paste)
+
+Run these commands in project root:
+
+```bash
+npm install
+npm run cf:build
+npx wrangler versions upload --dry-run
+```
+
+Expected result: no "Missing entry-point" / "entry-point file ... was not found" error and no `_worker.js directory as an asset` error; Wrangler reports upload size.
+
+## 4) If deployment still serves old placeholder text
+
+1. Confirm latest commit (with new `wrangler.jsonc`) is pushed.
+2. Trigger a new Cloudflare deployment manually.
+3. Open the newest deployment URL (not an older one).
+4. Hard refresh browser (`Ctrl+Shift+R`).
+
+## 5) Typical troubleshooting
 
 - Build fails: verify Node version and build command.
 - API fails: verify binding names exactly match code usage.
 - DB errors: check migrations ran and schema exists.
-
-## 7. Next Step (Recommended)
-
-Automate validation via GitHub Actions so every push runs lint/tests/build before Cloudflare deployment.
+- `wrangler versions upload` fails with "Missing entry-point": ensure `build.command` exists in `wrangler.jsonc` and `npm run cf:build` works locally.
+- `Uploading a Pages _worker.js directory as an asset`: ensure `.vercel/output/static/.assetsignore` contains `_worker.js` (this repo now writes that automatically in `cf:build`).
