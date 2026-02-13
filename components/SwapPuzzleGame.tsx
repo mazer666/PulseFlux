@@ -401,7 +401,7 @@ export function SwapPuzzleGame() {
   };
 
   const clueList = activeClueOrientation === 'across' ? puzzle.acrossClues : puzzle.downClues;
-  const safeClueIndex = Math.min(activeClueIndex, clueList.length - 1);
+  const safeClueIndex = clueList.length > 0 ? Math.min(activeClueIndex, clueList.length - 1) : 0;
 
   const selectPreviousClue = () => {
     if (clueList.length === 0) return;
@@ -426,18 +426,22 @@ export function SwapPuzzleGame() {
     setDragTile(null);
   };
 
-  const clueList = activeClueOrientation === 'across' ? puzzle.acrossClues : puzzle.downClues;
-  const safeClueIndex = clueList.length > 0 ? Math.min(activeClueIndex, clueList.length - 1) : 0;
+  const clueList = useMemo(
+    () => (activeClueOrientation === 'across' ? puzzle.acrossClues : puzzle.downClues),
+    [activeClueOrientation, puzzle.acrossClues, puzzle.downClues]
+  );
+  const safeClueIndex = useMemo(
+    () => (clueList.length > 0 ? Math.min(activeClueIndex, clueList.length - 1) : 0),
+    [activeClueIndex, clueList]
+  );
 
-  const selectPreviousClue = () => {
+  const cycleClue = (direction: -1 | 1) => {
     if (clueList.length === 0) return;
-    setActiveClueIndex((prev) => (prev - 1 + clueList.length) % clueList.length);
+    setActiveClueIndex((prev) => (prev + direction + clueList.length) % clueList.length);
   };
 
-  const selectNextClue = () => {
-    if (clueList.length === 0) return;
-    setActiveClueIndex((prev) => (prev + 1) % clueList.length);
-  };
+  const selectPreviousClue = () => cycleClue(-1);
+  const selectNextClue = () => cycleClue(1);
 
   return (
     <main>
