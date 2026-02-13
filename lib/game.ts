@@ -30,27 +30,27 @@ const seedData: Record<Language, Record<5 | 7 | 9, PuzzleSeed>> = {
     5: {
       language: 'en',
       size: 5,
-      across: ['SATOR', 'AREPO', 'TENET', 'OPERA', 'ROTAS'],
+      across: ['SMILE', 'HONEY', 'APPLE', 'TRAIN', 'BEACH'],
       acrossClues: [
-        'Ancient Latin palindrome, first row.',
-        'Second row in the classic word square.',
-        'A perfect palindrome word in the center.',
-        'Fourth row from the same ancient square.',
-        'Final row that completes the square.'
+        'What your face does when the puzzle finally clicks.',
+        'Sweet golden spread made by busy bees.',
+        'Classic fruit; keeps doctors on their toes.',
+        'Long vehicle that runs on rails.',
+        'Sunny coast where waves meet sand.'
       ],
       downClues: ['Column 1 mirrors row 1.', 'Column 2 mirrors row 2.', 'Column 3 mirrors row 3.', 'Column 4 mirrors row 4.', 'Column 5 mirrors row 5.']
     },
     7: {
       language: 'en',
       size: 7,
-      across: ['ALGEBRA', 'LANTERN', 'GARDENS', 'EARNEST', 'BRONZEY', 'RINSEUP', 'ANSWERS'],
+      across: ['ALGEBRA', 'LANTERN', 'GARDENS', 'SUNRISE', 'HARMONY', 'POPCORN', 'ANSWERS'],
       acrossClues: [
         'Math branch with symbols and equations.',
         'Portable source of light.',
         'Plural spaces for flowers and plants.',
-        'Sincere and serious in intention.',
-        'Having a bronze-like color or tone.',
-        'Wash lightly and then continue.',
+        'Morning show starring the sun.',
+        'When notes play nicely together.',
+        'Movie snack that can\'t stay quiet.',
         'What players are trying to find.'
       ],
       downClues: ['Column clue 1.', 'Column clue 2.', 'Column clue 3.', 'Column clue 4.', 'Column clue 5.', 'Column clue 6.', 'Column clue 7.']
@@ -58,17 +58,17 @@ const seedData: Record<Language, Record<5 | 7 | 9, PuzzleSeed>> = {
     9: {
       language: 'en',
       size: 9,
-      across: ['NOTEBOOKS', 'ORIGAMIST', 'TACTICALS', 'ELEVATION', 'BALANCEDS', 'OUTREACHY', 'OKTOBERFS', 'STATIONSX', 'SYNERGIES'],
+      across: ['NOTEBOOKS', 'CHOCOLATE', 'PINEAPPLE', 'BUTTERFLY', 'WATERFALL', 'KEYBOARDS', 'MOONLIGHT', 'RAINDROPS', 'STARLIGHT'],
       acrossClues: [
         'Plural paper companions for ideas.',
-        'A person skilled in paper folding.',
-        'Plural adjective for strategic actions.',
-        'Height above a chosen reference point.',
-        'In equilibrium; steady and fair.',
-        'Action of extending help or contact.',
-        'Autumn month with stylistic spelling.',
-        'Places where trains can stop.',
-        'Combined effects greater than individual parts.'
+        'Sweet treat that melts if you wait too long.',
+        'Tropical fruit with a spiky crown.',
+        'Winged garden dancer with dramatic colors.',
+        'Nature\'s stairway made of rushing water.',
+        'Plural tools for typing and gaming quests.',
+        'Night glow that makes everything cinematic.',
+        'Tiny water beats in a rainy drumline.',
+        'Sky sparkle that deserves a slow clap.'
       ],
       downClues: ['Column clue 1.', 'Column clue 2.', 'Column clue 3.', 'Column clue 4.', 'Column clue 5.', 'Column clue 6.', 'Column clue 7.', 'Column clue 8.', 'Column clue 9.']
     }
@@ -77,21 +77,21 @@ const seedData: Record<Language, Record<5 | 7 | 9, PuzzleSeed>> = {
     5: {
       language: 'de',
       size: 5,
-      across: ['SATOR', 'AREPO', 'TENET', 'OPERA', 'ROTAS'],
+      across: ['SMILE', 'HONEY', 'APPLE', 'TRAIN', 'BEACH'],
       acrossClues: ['Lateinisches Wortquadrat Zeile 1.', 'Zeile 2 des klassischen Quadrats.', 'Palindrom in der Mitte.', 'Zeile 4 im Muster.', 'Abschlusszeile im Quadrat.'],
       downClues: ['Spalte 1.', 'Spalte 2.', 'Spalte 3.', 'Spalte 4.', 'Spalte 5.']
     },
     7: {
       language: 'de',
       size: 7,
-      across: ['ALGEBRA', 'LANTERN', 'GARDENS', 'EARNEST', 'BRONZEY', 'RINSEUP', 'ANSWERS'],
+      across: ['ALGEBRA', 'LANTERN', 'GARDENS', 'SUNRISE', 'HARMONY', 'POPCORN', 'ANSWERS'],
       acrossClues: ['Mathebereich mit Symbolen.', 'Tragbare Lichtquelle.', 'Mehrzahl von Garten.', 'Aufrichtig und ernst.', 'Bronzefarben.', 'Leicht ausspülen.', 'Gesuchte Lösungen.'],
       downClues: ['Spalte 1.', 'Spalte 2.', 'Spalte 3.', 'Spalte 4.', 'Spalte 5.', 'Spalte 6.', 'Spalte 7.']
     },
     9: {
       language: 'de',
       size: 9,
-      across: ['NOTEBOOKS', 'ORIGAMIST', 'TACTICALS', 'ELEVATION', 'BALANCEDS', 'OUTREACHY', 'OKTOBERFS', 'STATIONSX', 'SYNERGIES'],
+      across: ['NOTEBOOKS', 'CHOCOLATE', 'PINEAPPLE', 'BUTTERFLY', 'WATERFALL', 'KEYBOARDS', 'MOONLIGHT', 'RAINDROPS', 'STARLIGHT'],
       acrossClues: ['Notizbücher in Mehrzahl.', 'Jemand mit Papierfaltkunst.', 'Strategisch geprägt.', 'Höhenlage.', 'Im Gleichgewicht.', 'Kontaktaufnahme.', 'Stilistisch geschriebener Herbstmonat.', 'Bahnhalteorte.', 'Zusammenspiel mit Mehrwert.'],
       downClues: ['Spalte 1.', 'Spalte 2.', 'Spalte 3.', 'Spalte 4.', 'Spalte 5.', 'Spalte 6.', 'Spalte 7.', 'Spalte 8.', 'Spalte 9.']
     }
@@ -100,21 +100,21 @@ const seedData: Record<Language, Record<5 | 7 | 9, PuzzleSeed>> = {
     5: {
       language: 'fr',
       size: 5,
-      across: ['SATOR', 'AREPO', 'TENET', 'OPERA', 'ROTAS'],
+      across: ['SMILE', 'HONEY', 'APPLE', 'TRAIN', 'BEACH'],
       acrossClues: ['Carré latin, ligne 1.', 'Carré latin, ligne 2.', 'Palindrome central.', 'Carré latin, ligne 4.', 'Carré latin, ligne 5.'],
       downClues: ['Colonne 1.', 'Colonne 2.', 'Colonne 3.', 'Colonne 4.', 'Colonne 5.']
     },
     7: {
       language: 'fr',
       size: 7,
-      across: ['ALGEBRA', 'LANTERN', 'GARDENS', 'EARNEST', 'BRONZEY', 'RINSEUP', 'ANSWERS'],
+      across: ['ALGEBRA', 'LANTERN', 'GARDENS', 'SUNRISE', 'HARMONY', 'POPCORN', 'ANSWERS'],
       acrossClues: ['Branche des maths.', 'Lumière portable.', 'Espaces de fleurs.', 'Sincère et sérieux.', 'Teinte bronze.', 'Rincer puis continuer.', 'Ce que le joueur cherche.'],
       downClues: ['Colonne 1.', 'Colonne 2.', 'Colonne 3.', 'Colonne 4.', 'Colonne 5.', 'Colonne 6.', 'Colonne 7.']
     },
     9: {
       language: 'fr',
       size: 9,
-      across: ['NOTEBOOKS', 'ORIGAMIST', 'TACTICALS', 'ELEVATION', 'BALANCEDS', 'OUTREACHY', 'OKTOBERFS', 'STATIONSX', 'SYNERGIES'],
+      across: ['NOTEBOOKS', 'CHOCOLATE', 'PINEAPPLE', 'BUTTERFLY', 'WATERFALL', 'KEYBOARDS', 'MOONLIGHT', 'RAINDROPS', 'STARLIGHT'],
       acrossClues: ['Cahiers au pluriel.', 'Artisan du pliage papier.', 'À caractère stratégique.', 'Hauteur relative.', 'Stable et équilibré.', 'Action de tendre la main.', 'Mois d’automne stylisé.', 'Lieux d’arrêt des trains.', 'Effets combinés positifs.'],
       downClues: ['Colonne 1.', 'Colonne 2.', 'Colonne 3.', 'Colonne 4.', 'Colonne 5.', 'Colonne 6.', 'Colonne 7.', 'Colonne 8.', 'Colonne 9.']
     }
@@ -123,21 +123,21 @@ const seedData: Record<Language, Record<5 | 7 | 9, PuzzleSeed>> = {
     5: {
       language: 'es',
       size: 5,
-      across: ['SATOR', 'AREPO', 'TENET', 'OPERA', 'ROTAS'],
+      across: ['SMILE', 'HONEY', 'APPLE', 'TRAIN', 'BEACH'],
       acrossClues: ['Cuadrado latino fila 1.', 'Cuadrado latino fila 2.', 'Palíndromo central.', 'Cuadrado latino fila 4.', 'Cuadrado latino fila 5.'],
       downClues: ['Columna 1.', 'Columna 2.', 'Columna 3.', 'Columna 4.', 'Columna 5.']
     },
     7: {
       language: 'es',
       size: 7,
-      across: ['ALGEBRA', 'LANTERN', 'GARDENS', 'EARNEST', 'BRONZEY', 'RINSEUP', 'ANSWERS'],
+      across: ['ALGEBRA', 'LANTERN', 'GARDENS', 'SUNRISE', 'HARMONY', 'POPCORN', 'ANSWERS'],
       acrossClues: ['Rama matemática.', 'Fuente de luz portátil.', 'Espacios con flores.', 'Sincero y serio.', 'Tono bronce.', 'Enjuagar y seguir.', 'Lo que busca el jugador.'],
       downClues: ['Columna 1.', 'Columna 2.', 'Columna 3.', 'Columna 4.', 'Columna 5.', 'Columna 6.', 'Columna 7.']
     },
     9: {
       language: 'es',
       size: 9,
-      across: ['NOTEBOOKS', 'ORIGAMIST', 'TACTICALS', 'ELEVATION', 'BALANCEDS', 'OUTREACHY', 'OKTOBERFS', 'STATIONSX', 'SYNERGIES'],
+      across: ['NOTEBOOKS', 'CHOCOLATE', 'PINEAPPLE', 'BUTTERFLY', 'WATERFALL', 'KEYBOARDS', 'MOONLIGHT', 'RAINDROPS', 'STARLIGHT'],
       acrossClues: ['Cuadernos en plural.', 'Persona experta en origami.', 'De carácter estratégico.', 'Altitud sobre referencia.', 'En equilibrio.', 'Acción de acercamiento.', 'Mes otoñal escrito con estilo.', 'Paradas de tren.', 'Efecto combinado superior.'],
       downClues: ['Columna 1.', 'Columna 2.', 'Columna 3.', 'Columna 4.', 'Columna 5.', 'Columna 6.', 'Columna 7.', 'Columna 8.', 'Columna 9.']
     }

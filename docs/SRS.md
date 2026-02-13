@@ -42,6 +42,7 @@ SwapPuzzle is an online web game where users solve clue-based word grids by swap
 ### FR-001: Start Game
 
 - The system shall allow a user to start a new puzzle from a game lobby/state screen.
+- On new session start, the system shall display a start overlay for essential game options before gameplay begins.
 
 ### FR-002: Tile Swap
 
@@ -71,6 +72,7 @@ SwapPuzzle is an online web game where users solve clue-based word grids by swap
 
 - The system shall allow user-selectable difficulty profiles.
 - Profiles may toggle swap-cost rules and fail-at-zero mode.
+- The system shall expose options/settings through a dedicated gear-button entry point in gameplay UI.
 
 ### FR-008: Win/Lose Logic
 
@@ -111,6 +113,36 @@ SwapPuzzle is an online web game where users solve clue-based word grids by swap
 - The project shall include full docs under `/docs`.
 - The project shall include contribution workflow and coding standards.
 
+### FR-016: Touch Drag Swap Behavior
+
+- On touch-capable devices, the system shall support drag-and-drop swapping from one non-blocked tile to another non-blocked tile.
+- The system shall keep tap-to-select + tap-to-select as a fallback interaction path.
+
+### FR-017: Move Counting Rule
+
+- The system shall increment move/swap count only after a valid swap operation is completed.
+- Selecting or focusing a tile without completing a swap shall not increment move/swap count.
+
+### FR-018: Correct Tile Feedback
+
+- The system shall visually mark correctly placed tiles with a distinct state color.
+- The color treatment for correct state shall meet WCAG 2.1 AA contrast requirements with foreground content.
+
+### FR-019: Partial Grid Occupancy
+
+- The system shall support puzzle layouts where some grid cells are intentionally inactive/blocked.
+- Inactive/blocked cells shall not be swappable and shall not be counted toward solved word content.
+
+### FR-020: Clue Orientation Toggle by Cell
+
+- Selecting a clue start cell shall show one clue orientation (horizontal or vertical) based on current context.
+- A second selection of the same clue start cell shall toggle the clue orientation (horizontal <-> vertical).
+
+### FR-021: Clue Tone and Style
+
+- The clue corpus shall include a blend of direct clues and playful clues (including occasional wordplay).
+- Family/Kid profiles shall still enforce content safety while allowing age-appropriate playful clue tone.
+
 ## 4. Non-Functional Requirements
 
 ### NFR-001 Performance
@@ -122,6 +154,7 @@ SwapPuzzle is an online web game where users solve clue-based word grids by swap
 
 - Target conformance: WCAG 2.1 AA.
 - Keyboard navigability and visible focus indicators are mandatory.
+- Color-only status cues shall be paired with shape/border/icon signals where feasible.
 
 ### NFR-003 Security
 

@@ -62,11 +62,19 @@ The product goal is to deliver a "best-in-class" player experience: polished UX,
 ## 6. Core Experience Requirements
 
 - Swapping any two tiles must be intuitive and responsive.
+- On touch devices, dragging tile A onto tile B shall swap them directly (drag-and-swap primary pattern).
+- Tap-first selection is allowed as fallback, but a move is counted only when a swap is executed (not on first tile selection).
+- Correctly placed tiles must be visibly color-coded while preserving accessibility contrast.
+- Boards may include inactive/blocked cells; not every grid position must contain a playable tile.
+- Tapping a clue start cell cycles clue orientation between horizontal and vertical (2nd tap toggles orientation).
+- Clue writing should mix clear definitions with playful tone (including occasional wordplay), not only dictionary-style clues.
 - Win condition: all target words are correct.
 - Lose condition: optional mode where game ends at 0 swaps.
 - Continue option: optional mode to keep playing at 0 swaps.
 - Mandatory win animation feedback.
 - UI themes and visual styles must be optional/selectable.
+- Options/settings access must be via a dedicated gear-button entry point.
+- On game start, options must appear as an overlay before entering active play.
 
 ## 7. Non-Functional Product Requirements
 
