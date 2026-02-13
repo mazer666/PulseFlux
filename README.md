@@ -1,6 +1,6 @@
-# SwapPuzzle
+# Pulse Flux
 
-SwapPuzzle is a multilingual web puzzle game prototype where players solve a board by swapping any two tiles.
+Pulse Flux is a multilingual web puzzle game prototype where players solve a board by swapping any two tiles.
 
 ## Current MVP Implementation
 
