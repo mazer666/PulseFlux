@@ -5,6 +5,8 @@ const allowedLanguages: Language[] = ['en', 'de', 'fr', 'es'];
 const allowedSizes = [5, 7, 9] as const;
 const allowedProfiles: ContentProfile[] = ['standard', 'family', 'kid'];
 
+export const runtime = 'edge';
+
 export async function GET(request: NextRequest) {
   const params = request.nextUrl.searchParams;
   const langParam = params.get('lang') as Language | null;
