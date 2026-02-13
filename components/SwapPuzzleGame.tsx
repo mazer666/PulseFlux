@@ -39,7 +39,7 @@ const defaultSettings: Settings = {
   profile: 'family',
   failAtZero: true,
   continueAtZero: false,
-  useBlockedCells: true
+  useBlockedCells: false
 };
 
 const copy: Dictionary = {
@@ -68,7 +68,9 @@ const copy: Dictionary = {
     family: 'Family',
     kid: 'Kid',
     on: 'ON',
-    off: 'OFF'
+    off: 'OFF',
+    across: 'Across',
+    down: 'Down'
   },
   de: {
     title: 'SwapPuzzle',
@@ -95,7 +97,9 @@ const copy: Dictionary = {
     family: 'Familie',
     kid: 'Kids',
     on: 'AN',
-    off: 'AUS'
+    off: 'AUS',
+    across: 'Waagrecht',
+    down: 'Senkrecht'
   },
   fr: {
     title: 'SwapPuzzle',
@@ -122,7 +126,9 @@ const copy: Dictionary = {
     family: 'Famille',
     kid: 'Enfant',
     on: 'ON',
-    off: 'OFF'
+    off: 'OFF',
+    across: 'Horizontal',
+    down: 'Vertical'
   },
   es: {
     title: 'SwapPuzzle',
@@ -149,7 +155,9 @@ const copy: Dictionary = {
     family: 'Familia',
     kid: 'Niños',
     on: 'ON',
-    off: 'OFF'
+    off: 'OFF',
+    across: 'Horizontal',
+    down: 'Vertical'
   }
 };
 
@@ -222,20 +230,41 @@ function buildStartMap(size: number, blocked: Set<number>): Map<number, StartInf
     const isAcrossStart = col === 0 || blocked.has(idx - 1);
     const isDownStart = row === 0 || blocked.has(idx - size);
 
-    if (!isAcrossStart && !isDownStart) continue;
+    const acrossLength = isAcrossStart
+      ? (() => {
+          let len = 0;
+          for (let c = col; c < size && !blocked.has(row * size + c); c += 1) len += 1;
+          return len;
+        })()
+      : 0;
+    const downLength = isDownStart
+      ? (() => {
+          let len = 0;
+          for (let r = row; r < size && !blocked.has(r * size + col); r += 1) len += 1;
+          return len;
+        })()
+      : 0;
+
+    const includeAcross = isAcrossStart && acrossLength > 1;
+    const includeDown = isDownStart && downLength > 1;
+    if (!includeAcross && !includeDown) continue;
 
     map.set(idx, {
       number: clueNo,
-      acrossIndex: isAcrossStart ? acrossIdx : null,
-      downIndex: isDownStart ? downIdx : null
+      acrossIndex: includeAcross ? acrossIdx : null,
+      downIndex: includeDown ? downIdx : null
     });
 
     clueNo += 1;
-    if (isAcrossStart) acrossIdx += 1;
-    if (isDownStart) downIdx += 1;
+    if (includeAcross) acrossIdx += 1;
+    if (includeDown) downIdx += 1;
   }
 
   return map;
+}
+
+function stripProfilePrefix(clue: string): string {
+  return clue.replace(/^\[[^\]]+\]\s*/u, "");
 }
 
 export function SwapPuzzleGame() {
@@ -252,6 +281,7 @@ export function SwapPuzzleGame() {
   const [activeClueOrientation, setActiveClueOrientation] = useState<ClueOrientation>('across');
   const [activeClueIndex, setActiveClueIndex] = useState(0);
   const [imageCells, setImageCells] = useState<Set<number>>(new Set([0]));
+  const [dragPreferred, setDragPreferred] = useState(false);
 
   const t = copy[settings.language];
   const blocked = useMemo(() => blockedIndexes(settings.size, settings.useBlockedCells), [settings.size, settings.useBlockedCells]);
@@ -283,6 +313,15 @@ export function SwapPuzzleGame() {
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [showSettings]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return;
+    const mediaQuery = window.matchMedia('(pointer: fine)');
+    const update = () => setDragPreferred(mediaQuery.matches);
+    update();
+    mediaQuery.addEventListener('change', update);
+    return () => mediaQuery.removeEventListener('change', update);
+  }, []);
 
   useEffect(() => {
     if (!solved) return;
@@ -383,7 +422,12 @@ export function SwapPuzzleGame() {
 
     setClueFromCell(index);
 
-    if (!canPlay || isLocked(index)) return;
+    if (!canPlay || isLocked(index) || dragPreferred) return;
+
+    if (selectedTile === index) {
+      setSelectedTile(null);
+      return;
+    }
 
     if (selectedTile === null) {
       setSelectedTile(index);
@@ -396,21 +440,9 @@ export function SwapPuzzleGame() {
   const handleTouchStart = (index: number) => {
     if (!blocked.has(index) && !isLocked(index)) {
       setDragTile(index);
+      return;
     }
     setDragTile(null);
-  };
-
-  const clueList = activeClueOrientation === 'across' ? puzzle.acrossClues : puzzle.downClues;
-  const safeClueIndex = clueList.length > 0 ? Math.min(activeClueIndex, clueList.length - 1) : 0;
-
-  const selectPreviousClue = () => {
-    if (clueList.length === 0) return;
-    setActiveClueIndex((prev) => (prev - 1 + clueList.length) % clueList.length);
-  };
-
-  const selectNextClue = () => {
-    if (clueList.length === 0) return;
-    setActiveClueIndex((prev) => (prev + 1) % clueList.length);
   };
 
   const handleTouchEnd: TouchEventHandler<HTMLButtonElement> = (event) => {
@@ -440,6 +472,25 @@ export function SwapPuzzleGame() {
     setActiveClueIndex((prev) => (prev + direction + clueList.length) % clueList.length);
   };
 
+  const clueNumbers = useMemo(() => {
+    const across: number[] = [];
+    const down: number[] = [];
+
+    for (const info of startMap.values()) {
+      if (info.acrossIndex !== null) across[info.acrossIndex] = info.number;
+      if (info.downIndex !== null) down[info.downIndex] = info.number;
+    }
+
+    return { across, down };
+  }, [startMap]);
+
+  const activeClueNumber =
+    activeClueOrientation === 'across'
+      ? clueNumbers.across[safeClueIndex] ?? safeClueIndex + 1
+      : clueNumbers.down[safeClueIndex] ?? safeClueIndex + 1;
+
+  const activeClueText = stripProfilePrefix(clueList[safeClueIndex] ?? '—');
+
   const selectPreviousClue = () => cycleClue(-1);
   const selectNextClue = () => cycleClue(1);
 
@@ -448,7 +499,7 @@ export function SwapPuzzleGame() {
       <header className="topbar hero">
         <h1>{t.title}</h1>
         <button type="button" className="gear" onClick={() => setShowSettings(true)} aria-label={t.openSettings}>
-          ⚙️
+          <span className="gear-icon" aria-hidden="true">⚙️</span>
         </button>
       </header>
 
@@ -500,7 +551,7 @@ export function SwapPuzzleGame() {
                 <strong>{t.standard}</strong>
               </button>
               <button type="button" className={`profile-card ${settings.profile === 'family' ? 'active' : ''}`} onClick={() => setSettings((p) => ({ ...p, profile: 'family' }))}>
-                <span>👨‍👩‍👧</span>
+                <span>🧩</span>
                 <strong>{t.family}</strong>
               </button>
               <button type="button" className={`profile-card ${settings.profile === 'kid' ? 'active' : ''}`} onClick={() => setSettings((p) => ({ ...p, profile: 'kid' }))}>
@@ -558,7 +609,7 @@ export function SwapPuzzleGame() {
               <button
                 type="button"
                 data-tile-index={index}
-                className={`tile ${selectedTile === index ? 'selected' : ''} ${isCorrect ? 'correct locked' : ''} ${isBlocked ? 'blocked' : ''}`}
+                className={`tile ${!dragPreferred && selectedTile === index ? 'selected' : ''} ${isCorrect ? 'correct locked' : ''} ${isBlocked ? 'blocked' : ''}`}
                 onClick={() => onTileClick(index)}
                 onDragStart={() => setDragTile(index)}
                 onDragOver={(e) => e.preventDefault()}
@@ -570,7 +621,7 @@ export function SwapPuzzleGame() {
                 }}
                 onTouchStart={() => handleTouchStart(index)}
                 onTouchEnd={handleTouchEnd}
-                draggable={!isBlocked && !isCorrect}
+                draggable={dragPreferred && !isBlocked && !isCorrect}
                 key={`${tile.id}-${index}`}
                 aria-label={`Tile ${index + 1}`}
                 disabled={isBlocked}
@@ -589,13 +640,13 @@ export function SwapPuzzleGame() {
 
       <section className="panel clue-panel">
         <h2>
-          {t.clue} - {safeClueIndex + 1} {activeClueOrientation === 'across' ? 'Across' : 'Down'}
+          {t.clue} {activeClueNumber} · {activeClueOrientation === 'across' ? t.across : t.down}
         </h2>
         <div className="clue-controls">
           <button className="secondary" type="button" onClick={selectPreviousClue}>
             {t.prevClue}
           </button>
-          <p>{clueList[safeClueIndex] ?? '—'}</p>
+          <p className="clue-text">{activeClueText}</p>
           <button className="secondary" type="button" onClick={selectNextClue}>
             {t.nextClue}
           </button>
@@ -607,7 +658,7 @@ export function SwapPuzzleGame() {
           {t.leaderboard}: {bestScore}
         </strong>
         <p style={{ marginBottom: 0 }}>
-          Mode: {settings.difficulty} · {settings.profile} · mixed-media
+          Mode: {settings.difficulty} · mixed-media
         </p>
       </section>
     </main>
