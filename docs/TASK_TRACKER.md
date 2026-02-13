@@ -59,7 +59,7 @@ Use this file to track delivery progress transparently.
 
 ### Phase 1 (2-4 weeks): Foundation
 
-Status: **Done** (see `docs/EPIC_G_PHASE1_DELIVERABLES.md`)
+Status: **Done (MVP delivered)** (see `docs/EPIC_G_PHASE1_DELIVERABLES.md`)
 
 - [x] Finalize target languages and age-rating standards
 - [x] Select 3-5 license-safe word sources per language
@@ -70,8 +70,8 @@ Status: **Done** (see `docs/EPIC_G_PHASE1_DELIVERABLES.md`)
 
 ### Phase 2 (4-8 weeks): Scale-up
 
-- [ ] Run pilot generation of 5,000-20,000 entries across priority languages
-- [ ] Perform manual review sample (minimum 500 entries) and feed back into prompts/rules
+- [~] Run pilot generation of 5,000-20,000 entries across priority languages (chunked generator implemented)
+- [~] Perform manual review sample (minimum 500 entries) and feed back into prompts/rules (sampling/export tooling implemented)
 - [ ] Add hybrid clue production flow (templates + LLM + human-in-the-loop)
 - [ ] Enable multi-clue candidate ranking per word (clarity, originality, solvability, compliance)
 - [ ] Introduce difficulty model with telemetry features (solve rate, time-to-solve, skips, hints)

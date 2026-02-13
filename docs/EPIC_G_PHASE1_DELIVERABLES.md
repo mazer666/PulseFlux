@@ -1,100 +1,75 @@
-# Epic G – Phase 1 Deliverables (Completed)
+# Epic G – Phase 1 Deliverables (Implemented MVP)
 
-Status: **Done**
+Status: **Done (MVP implemented, pending operational rollout)**
 
-This document records the concrete outputs completed for Epic G Phase 1.
+This document records the concrete outputs implemented for Epic G Phase 1.
 
 ## 1) Target languages and age-rating standards
 
-### Scope
-- Target languages for initial production: `de`, `en`, `fr`, `es`.
-- Audience/rating baseline: **family-friendly** with kid-safe filtering by default.
+Defined in `docs/epic-g/phase1/PHASE1_EXECUTION.md`.
 
-### Policy baseline
-- No explicit sexual content, hate speech, extremist content, self-harm instructions, or targeted harassment in words/clues.
-- No clues that disclose or include the target word directly (full word, stem, obvious substring leaks).
-- Humor must stay non-offensive and age-appropriate.
+- Target languages: `de`, `en`, `fr`, `es`
+- Baseline: family-friendly / kid-safe default
+- Hard safety exclusions documented
 
 ## 2) License-safe source shortlist (3-5 per language)
 
-Use only sources with explicit licenses compatible with product distribution. Keep license metadata in `source_trace`.
+Defined in `docs/epic-g/phase1/SOURCE_SHORTLIST_V1.md`.
 
-- **Open frequency lists / corpus-derived lists** (language-specific)
-- **Open lexicon/dictionary exports** with clear redistribution terms
-- **Internal curated allowlists** (brand-safe vocabulary)
-- **Educational/common-vocabulary sets** with explicit licensing
-
-> Operational rule: every source import must include: source name, URL/repo, license id/text, ingestion timestamp, and reviewer sign-off.
+- 4 candidate sources per language documented
+- Mandatory `source_trace` metadata fields established
+- Legal/reviewer gate policy documented
 
 ## 3) Content data model + status workflow
 
-## Canonical fields
-- `entry_id` (stable)
-- `language`
-- `word`
-- `lemma`
-- `pos`
-- `difficulty` (`1-5`)
-- `difficulty_confidence`
-- `clue_text`
-- `clue_style` (`neutral|funny|trivia|wordplay`)
-- `safety_flags`
-- `quality_scores` (`ambiguity|readability|similarity|predicted_solve_rate`)
-- `source_trace`
-- `status` (`draft|reviewed|approved|deprecated`)
-- `version`
+Implemented in `tools/content_pipeline/phase1_model.py`.
 
-### Workflow
-1. `draft` after generation/ingest
-2. `reviewed` after automated checks + reviewer pass
-3. `approved` after release gate
-4. `deprecated` when superseded or policy-removed
+Canonical fields include:
+- `entry_id`, `language`, `word`, `lemma`, `pos`
+- `difficulty`, `difficulty_confidence`
+- `clue_text`, `clue_style`
+- `safety_flags`, `quality_scores`
+- `source_trace`, `status`, `version`
+
+Workflow states implemented:
+1. `draft`
+2. `reviewed`
+3. `approved`
+4. `deprecated`
 
 ## 4) Prompting standards V1 (per language)
 
-All prompt templates must enforce:
-- clear, concise clue in target language
-- no repetition of answer word or close variant
-- one likely solution only (low ambiguity)
-- age-appropriate tone
-- max clue length (default: 90 chars)
-- no niche references unless marked higher difficulty
+Defined in `docs/epic-g/phase1/PROMPT_STANDARDS_V1.md`.
 
-Language adaptation rule:
-- keep intent/meaning, not literal translation
-- localize idioms and humor to locale
+- No word leak
+- One likely solution
+- Age-appropriate tone
+- Max clue length constraints
+- Locale-aware wrappers for `de/en/fr/es`
 
 ## 5) Auto-QA checks V1
 
-Required checks before human review:
-- **Policy check**: profanity/hate/unsafe category filters
-- **Ambiguity check**: lexical overlap with known distractors
-- **Similarity check**: near-duplicate clue detection
-- **Readability check**: length + complexity threshold by difficulty
-- **Leak check**: target word/stem/substring leakage
+Implemented in `tools/content_pipeline/auto_qa.py`.
+
+Checks included:
+- Policy check
+- Leak check
+- Readability check
+- Ambiguity check
+- Similarity check
 
 Gate policy:
-- hard fail on policy or leak
-- soft flag on ambiguity/similarity/readability for reviewer triage
+- Hard fail: policy/leak
+- Soft flag: ambiguity/similarity/readability
 
 ## 6) Reviewer queue MVP
 
-### Queue fields
-- `entry_id`, `language`, `word`, `clue_text`, `auto_flags`, `score_summary`, `source_trace`, `status`
+Implemented in `tools/content_pipeline/reviewer_queue.py`.
 
-### Actions
-- approve
-- request edit (with reason code)
-- reject/deprecate
-- escalate to trust & safety
-
-### Reason codes
-- policy_risk
-- ambiguity
-- too_easy_or_too_hard
-- poor_localization
-- unfunny_or_low_quality
-- duplicate
+- Queue item schema and review decisions
+- Actions: approve, request_edit, reject/deprecate, escalate
+- Fixed reason-code set
+- Admin UI MVP available at `/admin/reviewer-queue`
 
 ## Exit criteria met for Phase 1
 

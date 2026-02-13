@@ -60,6 +60,12 @@ def test_profile_and_zero_swap_options_present() -> None:
 
 
 
+
+def test_reviewer_admin_ui_present() -> None:
+    text = read("app/admin/reviewer-queue/page.tsx")
+    assert_true("Reviewer Queue Admin UI" in text, "Reviewer admin UI heading missing")
+    assert_true("Approve" in text and "Request edit" in text, "Reviewer action buttons missing")
+
 def test_massive_dataset_floor_present() -> None:
     text = read("lib/game.ts")
     assert_true("const MIN_DATASET_PER_LANGUAGE_AND_SIZE = 5000;" in text, "5000 dataset floor missing")
@@ -73,6 +79,7 @@ def run() -> int:
         test_board_size_options_present,
         test_language_support_present,
         test_profile_and_zero_swap_options_present,
+        test_reviewer_admin_ui_present,
         test_massive_dataset_floor_present,
     ]
 
