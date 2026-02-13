@@ -11,9 +11,9 @@
 ## 2. Core Screens (MVP)
 
 1. Landing/Home
-2. Mode & Options Selector
+2. Start Overlay (Mode & Options)
 3. Puzzle Board Screen
-4. Pause/Options Drawer
+4. In-Game Options Panel (opened via gear icon)
 5. Result Screen (Win/Lose)
 6. Local Leaderboard Screen
 7. Language/Profile Selector
@@ -21,20 +21,27 @@
 ## 3. Primary User Flow
 
 1. Open game.
-2. Select language + profile (standard/family/kid).
-3. Choose difficulty and board size.
-4. Start puzzle.
+2. Start Overlay opens above the board (mode/options, language, profile, difficulty, board size).
+3. Confirm Start in overlay.
+4. Puzzle begins.
 5. Swap tiles, browse clues, use fixed hints.
 6. Complete puzzle and view score/win animation.
 7. Save local result and optionally replay.
 
 ## 4. Interaction Design Requirements
 
-- Tap tile A + tile B to swap.
+- Options are reachable only via a gear button (top-level settings entry point).
+- On app launch, options are presented as an overlay before gameplay starts.
+- Touch-first: drag tile A onto tile B to swap.
+- Fallback: tap tile A + tap tile B to swap.
+- A move is counted only when a swap completes; tile selection alone does not consume a move.
 - Selected clue highlights corresponding board cells.
 - Clue panel supports across/down navigation.
+- Tapping the same clue start cell again toggles horizontal/vertical clue orientation.
 - Hint button tied to clue context; cannot be purchased/refilled.
 - Swap limit status visible when applicable.
+- Board layouts may include inactive/blocked cells (visualized clearly as non-playable).
+- Correctly placed tiles use a positive success state (color + border/icon support).
 
 ## 5. Accessibility Requirements
 
@@ -50,6 +57,17 @@
 - Theme options available (light/dark/playful/high-contrast).
 - Family/Kid profile can switch to softer color and icon presets.
 - Win animation is mandatory and delight-focused.
+- Clues should allow tonal variety: clear clues plus occasional funny/wordplay clues.
+
+### Suggested accessible color baseline (first pass)
+- Background: `#F4F3EF`
+- Primary action: `#1F6FEB`
+- Accent/selection: `#00A7C4`
+- Correct tile: `#6EEB34` with dark text `#111827`
+- Blocked cell: `#111827`
+- Error/invalid: `#D92D20`
+
+Note: final palette must be contrast-verified (WCAG 2.1 AA) per component state.
 
 ## 7. Error and Empty States
 

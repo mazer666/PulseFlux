@@ -1,4 +1,4 @@
-# Cloudflare Deployment Guide (Noob-Friendly)
+# Cloudflare Deployment Guide (Beginner-Friendly)
 
 If your site shows:
 
@@ -14,14 +14,14 @@ This repo is now configured so Wrangler uploads the **real Next.js output**:
 - `wrangler.jsonc` points to the generated worker and assets:
   - `main: .vercel/output/static/_worker.js/index.js`
   - `assets.directory: .vercel/output/static`
-- `wrangler.jsonc` now also has `build.command = "npm run cf:build"`, so `npx wrangler versions upload` first creates `.vercel/output` automatically.
+- `wrangler.jsonc` now also has `build.command = "npm run cf:build"`, so `npx wrangler deploy` first creates `.vercel/output` automatically.
 
 ## 2) Cloudflare settings you should use
 
 In Cloudflare (Workers build/deploy command), simplest setting is:
 
 ```bash
-npx wrangler versions upload
+npx wrangler deploy
 ```
 
 Why this works now: Wrangler runs `build.command` from `wrangler.jsonc` first, so the entry file exists before upload.
@@ -39,7 +39,7 @@ Run these commands in project root:
 ```bash
 npm install
 npm run cf:build
-npx wrangler versions upload --dry-run
+npx wrangler deploy --dry-run
 ```
 
 Expected result: no "Missing entry-point" / "entry-point file ... was not found" error and no `_worker.js directory as an asset` error; Wrangler reports upload size.
@@ -58,3 +58,23 @@ Expected result: no "Missing entry-point" / "entry-point file ... was not found"
 - DB errors: check migrations ran and schema exists.
 - `wrangler versions upload` fails with "Missing entry-point": ensure `build.command` exists in `wrangler.jsonc` and `npm run cf:build` works locally.
 - `Uploading a Pages _worker.js directory as an asset`: ensure `.vercel/output/static/.assetsignore` contains `_worker.js` (this repo now writes that automatically in `cf:build`).
+
+
+## 6) Warum `main-swappuzzle` geht, aber `swappuzzle` nicht
+
+Wenn du unter `main-swappuzzle...workers.dev` die neue Version siehst, unter `swappuzzle...workers.dev` aber nicht, ist meist Folgendes passiert:
+
+- Mit `wrangler versions upload` wurde nur eine Version hochgeladen, aber nicht als aktive Version auf den Worker geschaltet.
+- Oder es wurde ein anderer Worker-Name/Service aktualisiert.
+
+Mit der neuen Konfiguration (`npm run cf:deploy` -> `wrangler deploy`) wird die Version direkt auf den Worker `swappuzzle` veröffentlicht.
+
+Schnell-Check:
+
+```bash
+npx wrangler whoami
+npx wrangler deployments list
+npx wrangler deploy
+```
+
+Danach neu laden: `https://swappuzzle.volker-kowarsch.workers.dev/`
