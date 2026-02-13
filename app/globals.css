@@ -7,8 +7,8 @@
 
 body {
   margin: 0;
-  background: radial-gradient(circle at top, #f8fafc, #f4f4ef 55%);
-  color: #111827;
+  background: radial-gradient(circle at top, #f8fafc, #f1f5f9 60%);
+  color: #0f172a;
 }
 
 main {
@@ -19,40 +19,44 @@ main {
 
 .hero h1 {
   margin: 0;
-  font-size: clamp(1.4rem, 2vw, 2rem);
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  letter-spacing: -0.02em;
 }
 
 .topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.85rem;
 }
 
 .panel {
   background: #ffffff;
-  border-radius: 16px;
+  border-radius: 18px;
   padding: 1rem;
-  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.09);
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
 }
 
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.45);
+  background: rgba(15, 23, 42, 0.4);
   display: grid;
   place-items: center;
   z-index: 30;
   padding: 1rem;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(4px);
 }
 
 .controls.premium {
-  width: min(940px, 100%);
+  width: min(760px, 100%);
+  max-height: min(92vh, 760px);
+  overflow: auto;
   display: grid;
-  gap: 1rem;
-  background: linear-gradient(180deg, #ffffff, #f8fcff);
-  border: 1px solid #e2e8f0;
+  gap: 0.95rem;
+  padding: 1.2rem;
+  background: #ffffff;
 }
 
 .overlay-head {
@@ -63,33 +67,47 @@ main {
 
 .overlay-head h2 {
   margin: 0;
+  font-size: 1.65rem;
 }
 
 .gear,
 .close {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 999px;
   border: none;
-  display: grid;
-  place-items: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  padding: 0;
 }
 
-.gear { background: #00a7c4; color: white; }
-.close { background: #111827; color: white; }
+.gear {
+  background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+  color: white;
+}
+
+.gear-icon {
+  display: block;
+  line-height: 1;
+  font-size: 1.15rem;
+}
+
+.close { background: #0f172a; color: white; }
 
 label {
   display: grid;
   gap: 0.35rem;
-  font-size: 0.93rem;
+  font-size: 0.95rem;
+  font-weight: 600;
 }
 
 select,
 button {
   border-radius: 10px;
   border: 1px solid #d1d5db;
-  padding: 0.52rem 0.7rem;
+  padding: 0.56rem 0.75rem;
   font-size: 0.95rem;
 }
 
@@ -101,25 +119,26 @@ button {
 }
 
 .start {
-  background: linear-gradient(135deg, #1f6feb, #00a7c4);
+  background: linear-gradient(135deg, #1d4ed8, #0891b2);
   font-weight: 700;
+  min-height: 44px;
 }
 
 .flag-group {
   display: grid;
-  gap: 0.4rem;
+  gap: 0.45rem;
 }
 
 .chip-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.45rem;
+  gap: 0.5rem;
 }
 
 .chip {
   background: #f1f5f9;
   color: #0f172a;
-  min-width: 44px;
+  min-width: 46px;
   border: 1px solid #cbd5e1;
   transition: transform 120ms ease, box-shadow 120ms ease;
 }
@@ -127,40 +146,40 @@ button {
 .chip.text { text-transform: capitalize; }
 
 .chip.active {
-  background: #1f6feb;
+  background: #2563eb;
   color: #fff;
   border-color: transparent;
-  box-shadow: 0 6px 16px rgba(31, 111, 235, 0.28);
+  box-shadow: 0 7px 16px rgba(37, 99, 235, 0.25);
 }
 
 .profiles {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
 }
 
 .profile-card {
   background: #f8fafc;
   color: #0f172a;
   border: 1px solid #dbe2ea;
-  min-height: 90px;
+  min-height: 86px;
   display: grid;
   gap: 0.25rem;
   justify-items: center;
   align-content: center;
-  transition: border-color 120ms ease, transform 120ms ease;
+  transition: border-color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
 }
 
 .profile-card.active {
   background: #ecfeff;
-  border: 2px solid #00a7c4;
+  border: 2px solid #06b6d4;
+  box-shadow: 0 8px 18px rgba(14, 165, 233, 0.15);
   transform: translateY(-1px);
 }
 
-
 .toggles {
   display: grid;
-  gap: 0.65rem;
+  gap: 0.6rem;
 }
 
 .switch-row {
@@ -207,19 +226,11 @@ button {
   transition: left 140ms ease;
 }
 
-.switch.on {
-  background: linear-gradient(90deg, #86efac, #22c55e);
-}
+.switch.on { background: linear-gradient(90deg, #86efac, #22c55e); }
+.switch.off { background: linear-gradient(90deg, #e5e7eb, #cbd5e1); }
+.switch.on .switch-knob { left: 68px; }
 
-.switch.off {
-  background: linear-gradient(90deg, #e5e7eb, #cbd5e1);
-}
-
-.switch.on .switch-knob {
-  left: 68px;
-}
-
-.board-panel { margin-top: 0.4rem; }
+.board-panel { margin-top: 0.5rem; }
 
 .board {
   display: grid;
@@ -243,13 +254,13 @@ button {
   overflow: hidden;
 }
 
-.tile.selected { border-color: #00a7c4; box-shadow: 0 0 0 2px rgba(0, 167, 196, 0.2); }
-.tile.correct { background: #6eeb34; border-color: #22a146; }
+.tile.selected { border-color: #0ea5e9; box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2); }
+.tile.correct { background: #65d62f; border-color: #22a146; }
 .tile.locked { cursor: not-allowed; }
 .tile.blocked,
 .tile:disabled {
-  background: #111827;
-  border-color: #111827;
+  background: #0f172a;
+  border-color: #0f172a;
   cursor: not-allowed;
 }
 
@@ -266,7 +277,7 @@ button {
   min-width: 18px;
   height: 18px;
   border-radius: 6px;
-  background: #00a7c4;
+  background: #06b6d4;
   color: #fff;
   font-size: 0.68rem;
   display: grid;
@@ -274,16 +285,37 @@ button {
   font-weight: 800;
 }
 
-.clue-panel { margin-top: 0.8rem; }
+.clue-panel {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.clue-panel h2 {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(1.35rem, 3vw, 1.9rem);
+}
 
 .clue-controls {
   display: grid;
-  grid-template-columns: 120px 1fr 120px;
-  gap: 0.7rem;
+  grid-template-columns: minmax(120px, 150px) 1fr minmax(120px, 150px);
+  gap: 1rem;
   align-items: center;
 }
 
-.secondary { background: #0f766e; }
+.secondary {
+  background: #0f766e;
+  min-height: 42px;
+}
+
+.clue-text {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  line-height: 1.45;
+  color: #0f172a;
+}
 
 .status {
   font-weight: 700;
@@ -295,5 +327,7 @@ button {
 
 @media (max-width: 760px) {
   .profiles { grid-template-columns: 1fr; }
+  .switch-row { align-items: start; }
   .clue-controls { grid-template-columns: 1fr; }
+  .secondary { width: 100%; }
 }
