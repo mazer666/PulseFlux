@@ -65,7 +65,9 @@ const copy: Dictionary = {
     close: 'Close',
     standard: 'Standard',
     family: 'Family',
-    kid: 'Kid'
+    kid: 'Kid',
+    on: 'ON',
+    off: 'OFF'
   },
   de: {
     title: 'SwapPuzzle',
@@ -90,7 +92,9 @@ const copy: Dictionary = {
     close: 'Schließen',
     standard: 'Standard',
     family: 'Familie',
-    kid: 'Kids'
+    kid: 'Kids',
+    on: 'AN',
+    off: 'AUS'
   },
   fr: {
     title: 'SwapPuzzle',
@@ -115,7 +119,9 @@ const copy: Dictionary = {
     close: 'Fermer',
     standard: 'Standard',
     family: 'Famille',
-    kid: 'Enfant'
+    kid: 'Enfant',
+    on: 'ON',
+    off: 'OFF'
   },
   es: {
     title: 'SwapPuzzle',
@@ -140,7 +146,9 @@ const copy: Dictionary = {
     close: 'Cerrar',
     standard: 'Estándar',
     family: 'Familia',
-    kid: 'Niños'
+    kid: 'Niños',
+    on: 'ON',
+    off: 'OFF'
   }
 };
 
@@ -491,19 +499,27 @@ export function SwapPuzzleGame() {
             </div>
 
             <div className="toggles">
-              <button type="button" className={`toggle ${settings.failAtZero ? 'on' : ''}`} onClick={() => setSettings((p) => ({ ...p, failAtZero: !p.failAtZero }))}>
-                {t.failAtZero}
-              </button>
-              <button
-                type="button"
-                className={`toggle ${settings.continueAtZero ? 'on' : ''}`}
-                onClick={() => setSettings((p) => ({ ...p, continueAtZero: !p.continueAtZero }))}
-              >
-                {t.continueAtZero}
-              </button>
-              <button type="button" className={`toggle ${settings.useBlockedCells ? 'on' : ''}`} onClick={() => setSettings((p) => ({ ...p, useBlockedCells: !p.useBlockedCells }))}>
-                {t.blocked}
-              </button>
+              <div className="switch-row">
+                <span>{t.failAtZero}</span>
+                <button type="button" className={`switch ${settings.failAtZero ? 'on' : 'off'}`} onClick={() => setSettings((p) => ({ ...p, failAtZero: !p.failAtZero }))}>
+                  <span className="switch-state">{settings.failAtZero ? t.on : t.off}</span>
+                  <span className="switch-knob" aria-hidden="true" />
+                </button>
+              </div>
+              <div className="switch-row">
+                <span>{t.continueAtZero}</span>
+                <button type="button" className={`switch ${settings.continueAtZero ? 'on' : 'off'}`} onClick={() => setSettings((p) => ({ ...p, continueAtZero: !p.continueAtZero }))}>
+                  <span className="switch-state">{settings.continueAtZero ? t.on : t.off}</span>
+                  <span className="switch-knob" aria-hidden="true" />
+                </button>
+              </div>
+              <div className="switch-row">
+                <span>{t.blocked}</span>
+                <button type="button" className={`switch ${settings.useBlockedCells ? 'on' : 'off'}`} onClick={() => setSettings((p) => ({ ...p, useBlockedCells: !p.useBlockedCells }))}>
+                  <span className="switch-state">{settings.useBlockedCells ? t.on : t.off}</span>
+                  <span className="switch-knob" aria-hidden="true" />
+                </button>
+              </div>
             </div>
 
             <button type="button" className="start" onClick={startNewPuzzle}>
