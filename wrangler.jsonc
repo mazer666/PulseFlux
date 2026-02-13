@@ -7,13 +7,6 @@
     "RATE_LIMIT_WINDOW_MS": "60000",
     "RATE_LIMIT_MAX_REQUESTS": "120"
   },
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "swappuzzle-db",
-      "database_id": "00000000-0000-0000-0000-000000000000"
-    }
-  ],
   "build": {
     "command": "npm run cf:build"
   },
