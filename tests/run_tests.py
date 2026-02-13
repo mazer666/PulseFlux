@@ -59,6 +59,12 @@ def test_profile_and_zero_swap_options_present() -> None:
     assert_true("type ContentProfile" in read("lib/game.ts"), "Content profile type missing")
 
 
+
+def test_massive_dataset_floor_present() -> None:
+    text = read("lib/game.ts")
+    assert_true("const MIN_DATASET_PER_LANGUAGE_AND_SIZE = 5000;" in text, "5000 dataset floor missing")
+    assert_true("buildSizeDataset('en', 5)" in text, "Generated EN datasets missing")
+
 def run() -> int:
     tests = [
         test_api_route_exists,
@@ -67,6 +73,7 @@ def run() -> int:
         test_board_size_options_present,
         test_language_support_present,
         test_profile_and_zero_swap_options_present,
+        test_massive_dataset_floor_present,
     ]
 
     failures = 0

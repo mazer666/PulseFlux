@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildPuzzle, isSolved, swapTiles } from '@/lib/game';
+import { buildPuzzle, getDatasetStats, isSolved, swapTiles } from '@/lib/game';
 
 describe('game logic', () => {
   it('builds a puzzle with expected tile count for each board size', () => {
@@ -23,4 +23,15 @@ describe('game logic', () => {
     expect(isSolved(puzzle.solutionTiles, puzzle.solutionTiles)).toBe(true);
     expect(isSolved(unsolved, puzzle.solutionTiles)).toBe(false);
   });
+
+
+  it('provides at least 5000 generated dataset entries per language and board size', () => {
+    const stats = getDatasetStats();
+    for (const lang of ['en', 'de', 'fr', 'es'] as const) {
+      expect(stats[lang][5]).toBeGreaterThanOrEqual(5000);
+      expect(stats[lang][7]).toBeGreaterThanOrEqual(5000);
+      expect(stats[lang][9]).toBeGreaterThanOrEqual(5000);
+    }
+  });
+
 });

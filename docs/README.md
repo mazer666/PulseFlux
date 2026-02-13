@@ -31,3 +31,7 @@ This folder contains the full planning and requirements package for the SwapPuzz
 - All features must map to MVP or Phase 2 in the roadmap.
 - All merged work must be traceable in `TASK_TRACKER.md`.
 - `CHANGELOG.md` is mandatory for every release increment.
+
+13. [Accessibility Audit Checklist](./ACCESSIBILITY_AUDIT_CHECKLIST.md)
+14. [GDPR/COPPA Review](./GDPR_COPPA_REVIEW.md)
+15. [Security Hardening](./SECURITY_HARDENING.md)

@@ -563,21 +563,21 @@ export function SwapPuzzleGame() {
             <div className="toggles">
               <div className="switch-row">
                 <span>{t.failAtZero}</span>
-                <button type="button" className={`switch ${settings.failAtZero ? 'on' : 'off'}`} onClick={() => setSettings((p) => ({ ...p, failAtZero: !p.failAtZero }))}>
+                <button type="button" className={`switch ${settings.failAtZero ? 'on' : 'off'}`} aria-pressed={settings.failAtZero} onClick={() => setSettings((p) => ({ ...p, failAtZero: !p.failAtZero }))}>
                   <span className="switch-state">{settings.failAtZero ? t.on : t.off}</span>
                   <span className="switch-knob" aria-hidden="true" />
                 </button>
               </div>
               <div className="switch-row">
                 <span>{t.continueAtZero}</span>
-                <button type="button" className={`switch ${settings.continueAtZero ? 'on' : 'off'}`} onClick={() => setSettings((p) => ({ ...p, continueAtZero: !p.continueAtZero }))}>
+                <button type="button" className={`switch ${settings.continueAtZero ? 'on' : 'off'}`} aria-pressed={settings.continueAtZero} onClick={() => setSettings((p) => ({ ...p, continueAtZero: !p.continueAtZero }))}>
                   <span className="switch-state">{settings.continueAtZero ? t.on : t.off}</span>
                   <span className="switch-knob" aria-hidden="true" />
                 </button>
               </div>
               <div className="switch-row">
                 <span>{t.blocked}</span>
-                <button type="button" className={`switch ${settings.useBlockedCells ? 'on' : 'off'}`} onClick={() => setSettings((p) => ({ ...p, useBlockedCells: !p.useBlockedCells }))}>
+                <button type="button" className={`switch ${settings.useBlockedCells ? 'on' : 'off'}`} aria-pressed={settings.useBlockedCells} onClick={() => setSettings((p) => ({ ...p, useBlockedCells: !p.useBlockedCells }))}>
                   <span className="switch-state">{settings.useBlockedCells ? t.on : t.off}</span>
                   <span className="switch-knob" aria-hidden="true" />
                 </button>
@@ -591,14 +591,14 @@ export function SwapPuzzleGame() {
         </section>
       ) : null}
 
-      <section className="panel board-panel">
-        <p className="status">
+      <section className="panel board-panel" aria-label="Puzzle board panel">
+        <p className="status" aria-live="polite">
           {t.swapsLeft}: {settings.difficulty === 'relaxed' ? '∞' : swapsLeft}
         </p>
-        {solved ? <p className="status success">{t.solved}</p> : null}
-        {gameOver ? <p className="status danger">{t.gameOver}</p> : null}
+        {solved ? <p className="status success" aria-live="assertive">{t.solved}</p> : null}
+        {gameOver ? <p className="status danger" aria-live="assertive">{t.gameOver}</p> : null}
 
-        <div className="board" style={{ gridTemplateColumns: `repeat(${settings.size}, 56px)` }}>
+        <div className="board" role="grid" aria-label="Puzzle grid" style={{ gridTemplateColumns: `repeat(${settings.size}, 56px)` }}>
           {tiles.map((tile, index) => {
             const startInfo = startMap.get(index);
             const isBlocked = blocked.has(index);
@@ -608,6 +608,7 @@ export function SwapPuzzleGame() {
             return (
               <button
                 type="button"
+                role="gridcell"
                 data-tile-index={index}
                 className={`tile ${!dragPreferred && selectedTile === index ? 'selected' : ''} ${isCorrect ? 'correct locked' : ''} ${isBlocked ? 'blocked' : ''}`}
                 onClick={() => onTileClick(index)}
@@ -624,6 +625,7 @@ export function SwapPuzzleGame() {
                 draggable={dragPreferred && !isBlocked && !isCorrect}
                 key={`${tile.id}-${index}`}
                 aria-label={`Tile ${index + 1}`}
+                aria-disabled={isBlocked}
                 disabled={isBlocked}
               >
                 {startInfo ? <span className="clue-badge">{startInfo.number}</span> : null}
