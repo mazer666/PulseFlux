@@ -36,7 +36,7 @@ def leak_check(word: str, clue_text: str) -> List[str]:
 
 
 def readability_check(clue_text: str, difficulty: int) -> List[str]:
-    max_len = {1: 55, 2: 65, 3: 75, 4: 85, 5: 90}[difficulty]
+    max_len = {1: 55, 2: 65, 3: 75, 4: 85, 5: 90}.get(difficulty, float('inf'))
     return ["readability_flag"] if len(clue_text) > max_len else []
 
 
