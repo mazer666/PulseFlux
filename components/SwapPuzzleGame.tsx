@@ -396,21 +396,9 @@ export function SwapPuzzleGame() {
   const handleTouchStart = (index: number) => {
     if (!blocked.has(index) && !isLocked(index)) {
       setDragTile(index);
+      return;
     }
     setDragTile(null);
-  };
-
-  const clueList = activeClueOrientation === 'across' ? puzzle.acrossClues : puzzle.downClues;
-  const safeClueIndex = clueList.length > 0 ? Math.min(activeClueIndex, clueList.length - 1) : 0;
-
-  const selectPreviousClue = () => {
-    if (clueList.length === 0) return;
-    setActiveClueIndex((prev) => (prev - 1 + clueList.length) % clueList.length);
-  };
-
-  const selectNextClue = () => {
-    if (clueList.length === 0) return;
-    setActiveClueIndex((prev) => (prev + 1) % clueList.length);
   };
 
   const handleTouchEnd: TouchEventHandler<HTMLButtonElement> = (event) => {
