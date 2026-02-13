@@ -80,3 +80,18 @@ Note: final palette must be contrast-verified (WCAG 2.1 AA) per component state.
 - First puzzle completion rate.
 - Input error frequency (wrong taps, mis-swaps).
 - Session duration and replay rate (stored locally in MVP if implemented without tracking transmission).
+
+
+## 9. Visual Direction Examples
+
+1. **Playful Card UI (Arcade Lite)**
+   - Rounded cards, vibrant accents, emoji-forward profile visuals.
+   - Strong shadows, big tap targets, high-contrast clue footer panel.
+
+2. **Calm Premium (Puzzle Journal)**
+   - Soft neutral background, restrained blue/teal accents, elegant typography.
+   - Focus on readability, subtle animations, accessible switch controls.
+
+3. **Kid/Family Mode (Storybook Bright)**
+   - Slightly larger tiles, icon-assisted toggles, softer rounded controls.
+   - Color + icon feedback for correctness and lock-state clarity.
